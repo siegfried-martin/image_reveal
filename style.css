@@ -1,0 +1,87 @@
+#overlay {
+    position:absolute;
+    z-index: 100;
+    top: 0;
+    width: max-content;
+}
+
+#controls {
+    position:fixed;
+    z-index: 200;
+    top: 0;
+}
+
+#trash {
+    position:fixed;
+    z-index: 125;
+    top: 0;
+    right: 0;
+    background-color: white;
+    padding: 5px;
+}
+
+.icon {
+    z-index: 150;
+    font-size: 10px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, .6);
+    height: 55px;
+    width: 40px;
+}
+
+.icon.highlighted {
+    border: 2px solid orange;
+}
+
+.icon.small {
+    height: 40px;
+}
+
+#icons .icon {
+    float: left;
+}
+
+
+.tile {
+    width: 15px;
+    height: 15px;
+    /*opacity: 0.5;*/
+    background-color: black;
+    padding: 0;
+    display: table-cell;
+}
+
+.hidden {
+    /*visibility: hidden;*/
+    opacity: 0;
+}
+
+body {
+    background-color: black;
+}
+
+.upside-down {
+    transform: rotate(180deg);
+}
+
+.ui-autocomplete {
+    z-index: 250;
+}
+
+.ui-autocomplete li div {
+    font-size: 12px;
+}
+
+.ctrl-rectangle {
+    border: 1px dashed lightblue;
+    position: absolute;
+    z-index: 250;
+}
+
+* {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

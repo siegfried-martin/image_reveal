@@ -1,0 +1,22 @@
+var Images = {
+    "Seth": {file:"images/wizard.jpeg", label: "Seth"},
+    "Shaggy (Adam)":{file:"images/Shaggy.jpeg", label:"Shaggy"},
+    "Rosey (Jacob)":{file:"images/Rosey.jpeg", label:"Rosey"},
+    "Ephemer (James)":{file:"images/Ephemer.jpeg", label:"Ephemer"},
+    "Orlen (B man)":{file:"images/Orlan.jpeg", label:"Orlen"},
+    "pastor":{file: "images/pastor.jpeg"},
+    "cook":{file: "images/cook.jpeg"},
+    "spider":{file: "images/spider.jpeg"},
+    "big spider":{file: "images/bigspider.jpeg"},
+    "skeleton":{file: "images/skeleton.jpeg"},
+    "mummy":{file: "images/mummy.jpeg"},
+    "shadow":{file: "images/shadow.svg"},
+    "warrior":{file: "images/warrior.jpeg"},
+    "archer":{file: "images/archer.jpeg"},
+    "ghost":{file: "images/ghost.jpeg"},
+    "normal circle":{file: "images/circle.jpeg"},
+    "red circle":{file: "images/redcircle.jpeg"},
+    "blue circle":{file: "images/bluecircle.jpeg"},
+    "square":{file: "images/square.jpeg"},
+    "nerd": {file: "images/nerd.jpeg"}
+}

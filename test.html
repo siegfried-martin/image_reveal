@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Your Face</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="images.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+
+</head>
+
+<body>
+    <div id="controls">
+        <button onclick="setBrushWidth(0)">Set Brush Width 0</button>
+        <button onclick="setBrushWidth(1)">Set Brush Width 1</button>
+        <button onclick="setBrushWidth(2)">Set Brush Width 2</button>
+        <button onclick="$('#icons').toggle()">show/hide icons</button>
+        <div id="icons">
+            <input type="text" id="icon-picker"/>
+        </div>
+    </div>
+    <div id="trash">
+        <img src="trash.png" width="50px" height="50px" />
+    </div>
+    <div>
+        <div id="image-container" class="hidden">
+            <image id="image" src="map.jpg" draggable="false"></image>
+        </div>
+        <div id="overlay">
+            <div id="overlay-table"></div>
+        </div>
+    </div>
+  <script src="script.js"></script>
+</body>
+</html>
