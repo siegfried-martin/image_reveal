@@ -38,9 +38,15 @@ $(document).ready(function(){
     }, false);
 });
 
+isDraggingItem = false
+
 function addDraggableHandler(target) {
     $(target).draggable({
+        start: function(event, ui) {
+            isDraggingItem = true
+        },
         stop: function( event, ui ) {
+            isDraggingItem = false;
             console.log("event", event)
             console.log("ui", ui)
             if ($(this).parent().is("#icons")) {
@@ -86,16 +92,25 @@ function createIconEvent(event, ui) {
     var icon = $("<div>", {
         class: "icon draggable",
     })
+    var size = 40;
+    if (info.size && info.size == "large") {
+        size = 70
+    }
     var image = $("<img>", {
         src: info.file,
-        height: "40px",
-        width: "40px"
+        height: size+"px",
+        width: size+"px"
     })
     icon.append(image)
     if (info.label) {
         icon.append("<br/>"+info.label)
+        icon.addClass("with-label")
     } else {
-        icon.addClass("small")
+        if (info.size && info.size == "large") {
+            icon.addClass("large")
+        } else {
+            icon.addClass("small")
+        }
     }
     $("#icons").append(icon)
     addDraggableHandler(icon)
@@ -201,7 +216,7 @@ function attachShowHideTileEvents() {
 
     $("#overlay-table").mouseover(function(event){
         var target = $(event.target)
-        if (target.is(".tile")) {
+        if (!isDraggingItem && target.is(".tile")) {
             if (event.which == 1) {
                 if (isCtrlTileEvent) {
                     rectangleEnd = target;
@@ -292,6 +307,18 @@ function hideRectangle() {
     var table = startRow.parent()
     var endColumnIndex = rectangleEnd.index()
     var endRowIndex = rectangleEnd.parent().index()
+    var temp
+
+    if (startColumnIndex > endColumnIndex) {
+        temp = startColumnIndex;
+        startColumnIndex = endColumnIndex;
+        endColumnIndex = temp
+    }
+    if (startRowIndex > endRowIndex) {
+        temp = startRowIndex;
+        startRowIndex = endRowIndex;
+        endRowIndex = temp
+    }
 
     for (var i = startRowIndex; i <= endRowIndex; i++) {
         for (var j = startColumnIndex; j <= endColumnIndex; j++) {

@@ -24,17 +24,26 @@
     z-index: 150;
     font-size: 10px;
     text-align: center;
-    background-color: rgba(255, 255, 255, .6);
-    height: 55px;
-    width: 40px;
+    background-color: rgba(255, 255, 255, .6);  
 }
 
 .icon.highlighted {
     border: 2px solid orange;
 }
 
+.icon.with-label {
+    width: 40px;
+    height: 55px;
+}
+
 .icon.small {
     height: 40px;
+    width: 40px;
+}
+
+.icon.large {
+    height: 70px;
+    width: 70px;
 }
 
 #icons .icon {
