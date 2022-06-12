@@ -37,5 +37,9 @@ var Images = {
     "half orc": {file: "images/orc.png"},
     "elf female": {file: "images/elf female.png"},
     "elf male": {file: "images/elf male.png"},
-    "goblin": {file: "images/goblin.png"}
+    "goblin": {file: "images/goblin.png"},
+    "human male": {file: "images/human male.png"},
+    "human female": {file: "images/human female.png"},
+    "gnome": {file: "images/gnome.png"},
+    "dwarf": {file: "images/dwarf.png"}
 }

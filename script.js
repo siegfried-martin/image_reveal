@@ -7,8 +7,8 @@ $(document).ready(function(){
         addDraggableHandler($(this))
     })
 
-    $(".icon img").mousedown(function(event){
-        if (event.which == 3) {
+    $("body").on("mousedown", ".icon img", function(event){
+        if (event.which == 3 && !event.shiftKey) {
             $(this).toggleClass("upside-down")
         }
         
@@ -137,6 +137,7 @@ function removeHighlights() {
     highlightedTiles = $([]);
 }
 
+var groupFacingDir
 function movehighlightedGroup(event, ui) {
     var target = event.target;
     var movement = [
@@ -150,6 +151,33 @@ function movehighlightedGroup(event, ui) {
         offset.left += movement[1];
         $(this).offset(offset);
     })
+
+    if (groupFacingDir) {
+        var dotProduct = movement[0] * groupFacingDir[0] + movement[1] * groupFacingDir[1];
+        var magMovement = Math.sqrt(movement[0] ** 2 + movement[1] ** 2)
+        var magOld = Math.sqrt(groupFacingDir[0] ** 2 + groupFacingDir[1] ** 2)
+        var angle = Math.acos(dotProduct / (magMovement * magOld))
+        console.log(angle)
+
+        var targetOffset = $(target).offset()
+        console.log("targetOffset", targetOffset)
+        highlightedTiles.not(target).each(function(){
+            var offset = $(this).offset()
+            var top = targetOffset.top - offset.top
+            var left = targetOffset.left - offset.left
+            console.log("top", top, "left", left)
+            var topRotated = (Math.cos(angle) * top) - (Math.sin(angle) * left)
+            var leftRotated = (Math.sin(angle) * top) + (Math.cos(angle) * left)
+            offset.top -= topRotated - top
+            offset.left += leftRotated - left
+            console.log("movement vector", topRotated, leftRotated)
+            $(this).offset(offset)
+        })
+    }
+
+   
+
+    groupFacingDir = movement;
 }
 
 function setupOverlay() {
