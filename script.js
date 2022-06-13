@@ -152,31 +152,34 @@ function movehighlightedGroup(event, ui) {
         $(this).offset(offset);
     })
 
-    if (groupFacingDir) {
-        var dotProduct = movement[0] * groupFacingDir[0] + movement[1] * groupFacingDir[1];
-        var magMovement = Math.sqrt(movement[0] ** 2 + movement[1] ** 2)
-        var magOld = Math.sqrt(groupFacingDir[0] ** 2 + groupFacingDir[1] ** 2)
-        var angle = Math.acos(dotProduct / (magMovement * magOld))
+    if (groupFacingDir && !event.shiftKey) {
+        var angle1 = Math.atan2(movement[0],movement[1])
+        var angle2 = Math.atan2( groupFacingDir[0],groupFacingDir[1])
+        var angle = angle2-angle1
+        var nTurns = 8
+        angle = Math.round(angle/(2*Math.PI)*nTurns)*(2*Math.PI)/nTurns;
         console.log(angle)
 
-        var targetOffset = $(target).offset()
-        console.log("targetOffset", targetOffset)
         highlightedTiles.not(target).each(function(){
+            var targetOffset = $(target).offset()
             var offset = $(this).offset()
+
+            // Find current Distance from moved object
             var top = targetOffset.top - offset.top
             var left = targetOffset.left - offset.left
-            console.log("top", top, "left", left)
+            // console.log("top", top, "left", left)
+
+            // Find new rotated vector
             var topRotated = (Math.cos(angle) * top) - (Math.sin(angle) * left)
             var leftRotated = (Math.sin(angle) * top) + (Math.cos(angle) * left)
-            offset.top -= topRotated - top
-            offset.left += leftRotated - left
-            console.log("movement vector", topRotated, leftRotated)
-            $(this).offset(offset)
+            // console.log("movement vector", topRotated, leftRotated)
+
+            // Move from the moved object to where I should be
+            targetOffset.top -= topRotated
+            targetOffset.left -= leftRotated
+            $(this).offset(targetOffset)
         })
     }
-
-   
-
     groupFacingDir = movement;
 }
 
