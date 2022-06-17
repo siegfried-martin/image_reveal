@@ -45,8 +45,16 @@
     height: 70px;
     width: 70px;
 }
+.icon.huge {
+    height: 120px;
+    width: 120px;
+}
+.icon.wall {
+    height: 40px;
+    width: 160px;
+}
 
-#icons .icon {
+#icon-controls .icon {
     float: left;
 }
 
@@ -63,6 +71,10 @@
 .hidden {
     /*visibility: hidden;*/
     opacity: 0;
+}
+
+.hide {
+    display: none;
 }
 
 body {
@@ -93,4 +105,27 @@ body {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+}
+
+.p5Canvas {
+    position: absolute;
+    top: 0;
+    z-index: 125;
+}
+
+.control-group>div>* {
+    display: block;
+}
+
+#controls {
+    display: flex;
+}
+
+.control-group {
+    display: block;
+}
+
+.control-group fieldset {
+    background-color: rgba(255,255,255,0.7);
+    font-size: 70%;
 }

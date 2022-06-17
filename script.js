@@ -4,33 +4,33 @@ console.log($("#image").height())
 $(document).ready(function(){
 
     $(".draggable").each(function(){
-        addDraggableHandler($(this))
-    })
+        addDraggableHandler($(this));
+    });
 
     $("body").on("mousedown", ".icon img", function(event){
         if (event.which == 3 && !event.shiftKey) {
-            $(this).toggleClass("upside-down")
+            $(this).toggleClass("upside-down");
         }
         
-    })
+    });
 
     $("body").on("click", ".icon", function(e) {
         if (e.shiftKey) {
-            highlightTile($(this))
+            highlightTile($(this));
         }
-    })
+    });
 
     $("body").on("mousedown", ".icon", function(e) {
         if (e.shiftKey && e.which == 3) {
-            removeHighlights()
+            removeHighlights();
         }
-    })
+    });
 
     window.setTimeout(function(){
-        setupOverlay()
-        attachShowHideTileEvents()
-        setupIconPicker()
-        $("#image-container").removeClass("hidden")
+        setupOverlay();
+        attachShowHideTileEvents();
+        setupIconPicker();
+        $("#image-container").removeClass("hidden");
     }, 500);
 
     document.addEventListener("contextmenu", function (e){
@@ -38,7 +38,7 @@ $(document).ready(function(){
     }, false);
 });
 
-isDraggingItem = false
+isDraggingItem = false;
 
 function addDraggableHandler(target) {
     $(target).draggable({
@@ -49,7 +49,7 @@ function addDraggableHandler(target) {
             isDraggingItem = false;
             console.log("event", event)
             console.log("ui", ui)
-            if ($(this).parent().is("#icons")) {
+            if ($(this).parent().is("#icon-controls")) {
                 var offset = $(this).offset()
                 $(this).detach()
                 $("#image-container").append($(this))
@@ -83,41 +83,93 @@ function setupIconPicker() {
         source: Object.keys(Images),
         select: createIconEvent
     });
+
+    for (var key of getPrerenderedImages()) {
+        createIcon(key);
+    }
+}
+
+function getLabeledImages() {
+    var ret = []
+    for (var key in Images) {
+        var obj = Images[key];
+        if ("label" in obj) {
+            ret.push(key)
+        }
+    }
+    return ret
+}
+
+function getPrerenderedImages() {
+    var ret = []
+    for (var key in Images) {
+        var obj = Images[key];
+        if ("prerender" in obj) {
+            var count = obj["prerender"]
+            for (var i=0; i<count; i++) {
+                ret.push(key)
+            }
+        }
+    }
+    return ret
 }
 
 function createIconEvent(event, ui) {
     var target = $(event.target)
     var val = ui.item.value
-    var info = Images[val]
+    createIcon(val);
+
+    target.val("");
+    event.stopPropagation;
+    return false;
+}
+
+function createIcon(key) {
+    if (!key in Images) {
+        return;
+    }
+    var info = Images[key];
     var icon = $("<div>", {
         class: "icon draggable",
-    })
+    });
     var size = 40;
+    var width
     if (info.size && info.size == "large") {
-        size = 70
+        size = 70;
+    } else if (info.size && info.size == "huge") {
+        size = 120;
+    } else if (info.size && info.size == "wall") {
+        size = 40;
+        width = 160;
+    }
+    if (!width) {
+        width = size;
     }
     var image = $("<img>", {
         src: info.file,
         height: size+"px",
-        width: size+"px"
-    })
-    icon.append(image)
+        width: width+"px"
+    });
+    icon.append(image);
     if (info.label) {
-        icon.append("<br/>"+info.label)
-        icon.addClass("with-label")
+        icon.append("<br/>"+info.label);
+        icon.addClass("with-label");
     } else {
         if (info.size && info.size == "large") {
-            icon.addClass("large")
+            icon.addClass("large");
+        } else if (info.size && info.size == "huge") {
+            icon.addClass("huge");
+        } else if (info.size && info.size == "wall") {
+            icon.addClass("wall");
         } else {
-            icon.addClass("small")
+            icon.addClass("small");
         }
     }
-    $("#icons").append(icon)
-    addDraggableHandler(icon)
-
-    target.val("")
-    event.stopPropagation;
-    return false
+    if (icon.rotate) {
+        icon.css("transform", `rotate(${icon.rotate})`)
+    }
+    $("#icon-controls").append(icon);
+    addDraggableHandler(icon);
 }
 
 var highlightedTiles = $([]);
@@ -130,11 +182,13 @@ function highlightTile(target) {
         target.addClass("highlighted");
         highlightedTiles = highlightedTiles.add(target);
     }
+    groupFacingDir = null;
 }
 
 function removeHighlights() {
     $(".highlighted").removeClass("highlighted");
     highlightedTiles = $([]);
+    groupFacingDir = null;
 }
 
 var groupFacingDir
@@ -186,6 +240,7 @@ function movehighlightedGroup(event, ui) {
 function setupOverlay() {
     console.log($("#image").width())
     console.log($("#image").height())
+    $("#overlay-table").html("")
 
     var pixelWidth = $("#image").width();
     var pixelHeight = $("#image").height();
@@ -381,4 +436,30 @@ function moveRectangle() {
     });
     //ctrlRectangle.appendTo("#image-container")
     ctrlRectangle.appendTo("#overlay-table")
+}
+
+function uploadNewMap(image) {
+    var file = image[0].files[0];
+    var reader = new FileReader();
+
+    reader.addEventListener("load", function() {
+        $("#image").attr("src", reader.result);
+        $("#image-container").addClass("hidden");
+        window.setTimeout(function() {
+            setupOverlay();
+            $("#image-container").removeClass("hidden");
+        }, 200);
+    });
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
+function showAll() {
+    $(".tile").addClass("hidden")
+}
+
+function hideAll() {
+    $(".tile").removeClass("hidden")
 }
