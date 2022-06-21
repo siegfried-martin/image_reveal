@@ -24,11 +24,28 @@
     z-index: 150;
     font-size: 10px;
     text-align: center;
-    background-color: rgba(255, 255, 255, .6);  
+    background-color: rgba(255, 255, 255, .2);
 }
-
+.icon span {
+    background-color: white;
+}
+#icon-controls .icon {
+    background-color: rgba(255, 255, 255, .5);
+}
+.icon.nature, .icon.shapes {
+    background-color: rgba(255, 255, 255, 0);
+}
 .icon.highlighted {
     border: 2px solid orange;
+}
+.icon.wall {
+    z-index: 145;
+}
+.icon.nature {
+    z-index: 146;
+}
+.icon.shapes {
+    z-index: 147;
 }
 
 .icon.with-label {

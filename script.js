@@ -117,7 +117,16 @@ function getPrerenderedImages() {
 function createIconEvent(event, ui) {
     var target = $(event.target)
     var val = ui.item.value
-    createIcon(val);
+    var count = 1
+    if (event.shiftKey) {
+        count = 5
+    } else if (event.ctrlKey) {
+        count = 10
+    }
+
+    for (var i=0; i<count; i++) {
+        createIcon(val);
+    }
 
     target.val("");
     event.stopPropagation;
@@ -152,7 +161,7 @@ function createIcon(key) {
     });
     icon.append(image);
     if (info.label) {
-        icon.append("<br/>"+info.label);
+        icon.append(`<br/><span>${info.label}</span>`);
         icon.addClass("with-label");
     } else {
         if (info.size && info.size == "large") {
@@ -165,8 +174,11 @@ function createIcon(key) {
             icon.addClass("small");
         }
     }
-    if (icon.rotate) {
-        icon.css("transform", `rotate(${icon.rotate})`)
+    if (info.rotate) {
+        icon.css("transform", `rotate(${info.rotate}deg)`)
+    }
+    if (info.category) {
+        icon.addClass(info.category)
     }
     $("#icon-controls").append(icon);
     addDraggableHandler(icon);

@@ -14,6 +14,7 @@ for dir in os.scandir(dir_path):
             name = os.path.splitext(file.name)[0]
             key = "["+dir.name+"] "+name
             tile = {"file":"images/"+dir.name+"/"+file.name}
+            tile["category"] = dir.name
             if dir.name == "Characters":
                 tile["label"] = name
                 tile["prerender"] = 1
@@ -23,22 +24,26 @@ for dir in os.scandir(dir_path):
                 verticalTile = tile.copy()
                 verticalKey = key + " (vertical)"
                 verticalTile["rotate"] = 90
+                verticalTile["category"] = dir.name
                 Images[verticalKey] = verticalTile
 
-            elif dir.name == "shapes": 
+            elif dir.name == "shapes" or dir.name == "nature": 
                 largeTile = tile.copy()
                 largeKey = key + " (large)"
                 largeTile["size"] = "large"
+                largeTile["category"] = dir.name
                 Images[largeKey] = largeTile
                 hugeTile = tile.copy()
                 hugeKey = key + " (huge)"
                 hugeTile["size"] = "huge"
+                hugeTile["category"] = dir.name
                 Images[hugeKey] = hugeTile
 
             else:
                 largeTile = tile.copy()
                 largeKey = key + " (large)"
                 largeTile["size"] = "large"
+                largeTile["category"] = dir.name
                 Images[largeKey] = largeTile
 
             Images[key] = tile
