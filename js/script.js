@@ -1,5 +1,5 @@
-console.log($("#image").width())
-console.log($("#image").height())
+//console.log($("#image").width())
+//console.log($("#image").height())
 
 $(document).ready(function(){
 
@@ -80,19 +80,19 @@ function setupIconPicker() {
     iconPicker = $("#icon-picker").autocomplete({
         delay: 100,
         minlength: 2,
-        source: Object.keys(Images),
+        source: Object.keys(Icons),
         select: createIconEvent
     });
 
-    for (var key of getPrerenderedImages()) {
+    for (var key of getPrerenderedIcons()) {
         createIcon(key);
     }
 }
 
-function getLabeledImages() {
+function getLabeledIcons() {
     var ret = []
-    for (var key in Images) {
-        var obj = Images[key];
+    for (var key in Icons) {
+        var obj = ImIconsages[key];
         if ("label" in obj) {
             ret.push(key)
         }
@@ -100,10 +100,10 @@ function getLabeledImages() {
     return ret
 }
 
-function getPrerenderedImages() {
+function getPrerenderedIcons() {
     var ret = []
-    for (var key in Images) {
-        var obj = Images[key];
+    for (var key in Icons) {
+        var obj = Icons[key];
         if ("prerender" in obj) {
             var count = obj["prerender"]
             for (var i=0; i<count; i++) {
@@ -134,10 +134,10 @@ function createIconEvent(event, ui) {
 }
 
 function createIcon(key) {
-    if (!key in Images) {
+    if (!key in Icons) {
         return;
     }
-    var info = Images[key];
+    var info = Icons[key];
     var icon = $("<div>", {
         class: "icon draggable",
     });

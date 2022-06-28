@@ -1,18 +1,31 @@
 <!doctype html>
 
+<?php
+    //if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        include "login_handler.php";
+        handle_login();
+        $_SESSION["game_token"] = strval(rand(1000000, 9999999));
+    //}
+?>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <title>Image Reveal</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="images/images.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
-  <script src="draw.js"></script>
-
+    <title>Image Reveal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="icons/icons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+    <script src="js/draw.js"></script>
+    <?php if (isset($_SESSION['game_token'])) { ?>
+        <script src="js/connect.js"></script>
+        <script>
+            <?php echo "connect(".$_SESSION['game_token'].")" ?>
+        </script>
+    <?php } ?>
 </head>
 
 <body>
@@ -49,16 +62,16 @@
         </div>
     </div>
     <div id="trash">
-        <img src="trash.png" width="50px" height="50px" />
+        <img src="images/trash.png" width="50px" height="50px" />
     </div>
     <div>
         <div id="image-container" class="hidden">
-            <image id="image" src="map.jpg" draggable="false"></image>
+            <img id="image" src="images/map.jpg" draggable="false" />
         </div>
         <div id="overlay">
             <div id="overlay-table"></div>
         </div>
     </div>
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
